@@ -65,7 +65,5 @@ def remover_aluno(lista):
                 aluno['situacao-matricula'] = 'excluida'
                 return True
         return False
-    else:
-        print("Digite o tipo correto da matricula!")
-        return False
+
     
