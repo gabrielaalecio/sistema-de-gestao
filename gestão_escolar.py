@@ -27,22 +27,18 @@ def main():
             op =  int(input("Digite a opção desejada: "))
             os.system("cls")
             match op:
-                case 1:
+                case 1: #adicionar aluno
                     if add_alunos(lista_alunos):
                         console.print("[bold green]Aluno adicionado com sucesso![/bold green]")
                         sleep(2)
-                case 2:
+                case 2: #remover aluno
                     if remover_aluno(lista_alunos):
                         console.print("[bold green]Aluno removido com sucesso![/bold green]")
                         sleep(2)
-                case 3:
+                case 3: #listar alunos
                     listar_alunos(lista_alunos)
                     console.input()
-                case 8:
-                    with console.status("[bold green]Saindo...[/bold green]") as status:
-                        sleep(3)
-                    exit()
-                case 4:
+                case 4: #gerar relatorio
                     op_relatorio = Panel("1. Gerar relatório individual.\n2. Gerar relatório coletivo.\n3. Sair.", title="MENU", style='bold blue')
                     console.print(op_relatorio)
                     op_rel = console.input("Digite sua opção: ")
@@ -50,9 +46,15 @@ def main():
                         if gerar_rel(lista_alunos, op_rel):
                             console.print("[bold green]Relatório gerado com sucesso![/bold green]")
                         else:
-                            console.print("[bold green]Relatório gerado com sucesso![/bold green]") #não gerado!
+                            console.print("[bold green]Matricula não encontrada![/bold green]") #não gerado!
                     else:
-                        console.print("")
+                        console.print("Opção errada!")
+                case 5: #gerar planilha
+                    console.print()
+                case 6: #sair
+                    with console.status("[bold green]Saindo...[/bold green]") as status:
+                        sleep(3)
+                    exit()
                 case _:
                     console.print("Digite uma opção válida!")
         except ValueError:
