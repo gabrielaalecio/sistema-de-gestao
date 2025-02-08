@@ -1,13 +1,3 @@
-"""1. Gerenciamento de Alunos
-    ○ Adicionar alunos ao sistema com os seguintes dados:
-        ■ Nome completo
-        ■ Matrícula (única para cada aluno)
-        ■ Data de nascimento
-        ■ Notas em no mínimo 3 disciplinas (de 0 a 10)
-        ■ Total de faltas
-    ○ Remover alunos do sistema com base na matrícula.
-    ○ Listar todos os alunos cadastrados, mostrando nome, matrícula, notas e total de
-    faltas"""
 from gerenciador_arquivos import *
 from gerenciador_dados import *
 from gerador_relatorios import *
@@ -21,10 +11,11 @@ console =  Console()
 def main():
     lista_alunos = abrir_arquivo()
     while True:
-        menu = Panel("1. Adicionar Aluno.\n2. Remover Aluno.\n3. Exibir Alunos.\n4. Gerar Relatório Individual.", title="MENU", style='bold blue')
+        os.system("cls")
+        menu = Panel("1. Adicionar Aluno.\n2. Remover Aluno.\n3. Exibir Alunos.\n4. Gerar Relatórios.\n5. Gerar Planilha.\n6. Sair.", title="MENU", style='bold blue')
         console.print(menu)
         try:
-            op =  int(input("Digite a opção desejada: "))
+            op = int(input("Digite a opção desejada: "))
             os.system("cls")
             match op:
                 case 1: #adicionar aluno
@@ -37,29 +28,33 @@ def main():
                         sleep(2)
                 case 3: #listar alunos
                     listar_alunos(lista_alunos)
-                    console.input()
+                    console.input("Digite qualquer tecla para voltar ao menu: ")
                 case 4: #gerar relatorio
                     op_relatorio = Panel("1. Gerar relatório individual.\n2. Gerar relatório coletivo.\n3. Sair.", title="MENU", style='bold blue')
                     console.print(op_relatorio)
-                    op_rel = console.input("Digite sua opção: ")
+                    op_rel = int(console.input("Digite sua opção: "))
                     if 1 <= op_rel <= 2:
                         if gerar_rel(lista_alunos, op_rel):
                             console.print("[bold green]Relatório gerado com sucesso![/bold green]")
                         else:
-                            console.print("[bold green]Matricula não encontrada![/bold green]") #não gerado!
+                            console.print("[bold red]Matricula não encontrada![/bold red]") #não gerado!
                     else:
                         console.print("Opção errada!")
-                case 5: #gerar planilha
-                    console.print()
+                case 5:  #gerar planilha
+                    if gerar_planilha(lista_alunos):
+                        console.print("[bold green]Relatório gerado com sucesso![/bold green]")
+                    else:
+                        console.print("[bold red]Matricula não encontrada![/bold red]")
                 case 6: #sair
                     with console.status("[bold green]Saindo...[/bold green]") as status:
                         sleep(3)
                     exit()
                 case _:
-                    console.print("Digite uma opção válida!")
+                    console.print("[bold red]Digite uma opção válida![/bold red]")
+                    sleep(3)
         except ValueError:
-            print("Tipo da opção inválida!")
+            console.print("[bold red]Tipo da opção inválida![/bold red]")
         salvar_arquivo(lista_alunos)
-        os.system("cls")
+        sleep(3)
 
 main()
